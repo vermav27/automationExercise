@@ -48,6 +48,18 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		driver.close();
 	}
 	
+	public static void login(String validEmail,String validPassword) throws IOException {
+		
+		String path = System.getProperty("user.dir") + "\\src\\test\\resources\\configFiles\\config.properties";
+		FileInputStream file = new FileInputStream(path);
+		prop.load(file);
+		
+		driver.findElement(login_email_sel).sendKeys(prop.getProperty(validEmail));
+		driver.findElement(login_password_sel).sendKeys(prop.getProperty(validPassword));
+		driver.findElement(login_submit_sel).click();
+		
+	}
+	
 	public static void registerUser(String name,String email,String password,String accountDetail) {
 		
 		driver.findElement(name_sel).sendKeys(name);
@@ -185,6 +197,38 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		wait.until(ExpectedConditions.visibilityOf(newSignUp));
 		String newSignUpText = newSignUp.getText();
 		Assert.assertEquals(newSignUpText,"New User Signup!");
+		
+	}
+	
+	public static void verifyLogInToYouAccount() {
+		
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+		WebElement loginToAccount = driver.findElement(logInToYourAccount_sel);
+		wait.until(ExpectedConditions.visibilityOf(loginToAccount));
+		String loginToAccountText = loginToAccount.getText();
+		Assert.assertEquals(loginToAccountText,"Login to your account");
+		
+	}
+	
+	public static String getUserName() throws IOException {
+		
+		String path = System.getProperty("user.dir") + "\\src\\test\\resources\\configFiles\\config.properties";
+		FileInputStream file = new FileInputStream(path);
+		prop.load(file);
+		
+		String user = prop.getProperty("validUsername");
+		return user;
+		
+	}
+	
+	public static void verifyLoginAsUserName(String name){
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement loggedIn = driver.findElement(loggedInAsUserName_sel);
+		wait.until(ExpectedConditions.visibilityOf(loggedIn));
+		String actualLoggedInText = loggedIn.getText();
+		String expectedLoggedInText = "Logged in as " + name;
+		Assert.assertEquals(actualLoggedInText, expectedLoggedInText);
 		
 	}
 

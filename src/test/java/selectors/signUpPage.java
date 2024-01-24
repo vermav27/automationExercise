@@ -8,5 +8,8 @@ public interface signUpPage {
 	By name_sel = By.xpath("//input[@name=\"name\"]");
 	By email_sel = By.xpath("//form[@action='/signup']//input[@name=\"email\"]");
 	By signUpSubmit_sel = By.xpath("//button[@data-qa='signup-button']");
-
+	By login_email_sel = By.xpath("//form[@action='/login']//input[@name='email']");
+	By login_password_sel = By.xpath("//form[@action='/login']//input[@name='password']");
+	By login_submit_sel = By.xpath("//form[@action='/login']//button[@type='submit']");
+	By logInToYourAccount_sel = By.xpath("//div[@class='login-form']/h2");
 }
