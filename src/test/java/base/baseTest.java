@@ -241,5 +241,14 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		Assert.assertEquals(ActualIncorrectEmailMessage, "Your email or password is incorrect!");
 		
 	}
+	
+	public static void logout() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement logout = driver.findElement(logout_sel);
+		wait.until(ExpectedConditions.visibilityOf(logout));
+		logout.click();
+		
+	}
 
 }
