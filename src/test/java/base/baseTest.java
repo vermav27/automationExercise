@@ -60,6 +60,18 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		
 	}
 	
+	public static void registerUserWithExistingEmailName(String name,String email) throws IOException {
+		
+		String path = System.getProperty("user.dir") + "\\src\\test\\resources\\configFiles\\config.properties";
+		FileInputStream file = new FileInputStream(path);
+		prop.load(file);
+		
+		driver.findElement(name_sel).sendKeys(prop.getProperty(name));
+		driver.findElement(email_sel).sendKeys(prop.getProperty(email));
+		driver.findElement(signUpSubmit_sel).click();
+		
+	}
+	
 	public static void registerUser(String name,String email,String password,String accountDetail) {
 		
 		driver.findElement(name_sel).sendKeys(name);
@@ -248,6 +260,17 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		WebElement logout = driver.findElement(logout_sel);
 		wait.until(ExpectedConditions.visibilityOf(logout));
 		logout.click();
+		
+	}
+	
+	public static void verifyEmailAlreadyExisting() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement emailExisting = driver.findElement(emailAlreadyExist_sel);
+		wait.until(ExpectedConditions.visibilityOf(emailExisting));
+		
+		String actualEmaiExistingText = emailExisting.getText();
+		Assert.assertEquals(actualEmaiExistingText, "Email Address already exist!");
 		
 	}
 

@@ -13,4 +13,5 @@ public interface signUpPage {
 	By login_submit_sel = By.xpath("//form[@action='/login']//button[@type='submit']");
 	By logInToYourAccount_sel = By.xpath("//div[@class='login-form']/h2");
 	By emailPasswordIncorrect_sel = By.xpath("//form[@action='/login']/p");
+	By emailAlreadyExist_sel = By.xpath("//form[@action='/signup']//p");
 }
