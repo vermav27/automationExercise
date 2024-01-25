@@ -48,14 +48,14 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		driver.close();
 	}
 	
-	public static void login(String validEmail,String validPassword) throws IOException {
+	public static void login(String Email,String Password) throws IOException {
 		
 		String path = System.getProperty("user.dir") + "\\src\\test\\resources\\configFiles\\config.properties";
 		FileInputStream file = new FileInputStream(path);
 		prop.load(file);
 		
-		driver.findElement(login_email_sel).sendKeys(prop.getProperty(validEmail));
-		driver.findElement(login_password_sel).sendKeys(prop.getProperty(validPassword));
+		driver.findElement(login_email_sel).sendKeys(prop.getProperty(Email));
+		driver.findElement(login_password_sel).sendKeys(prop.getProperty(Password));
 		driver.findElement(login_submit_sel).click();
 		
 	}
@@ -229,6 +229,16 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		String actualLoggedInText = loggedIn.getText();
 		String expectedLoggedInText = "Logged in as " + name;
 		Assert.assertEquals(actualLoggedInText, expectedLoggedInText);
+		
+	}
+	
+	public static void verifyIncorrectEmailPassword() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement incorrectEmail = driver.findElement(emailPasswordIncorrect_sel);
+		wait.until(ExpectedConditions.visibilityOf(incorrectEmail));
+		String ActualIncorrectEmailMessage = incorrectEmail.getText();
+		Assert.assertEquals(ActualIncorrectEmailMessage, "Your email or password is incorrect!");
 		
 	}
 
