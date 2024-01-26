@@ -20,11 +20,12 @@ import org.testng.annotations.BeforeTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import selectors.accountCreatedPage;
 import selectors.basePage;
+import selectors.contactUsPage;
 import selectors.loggedInAsUserNamePage;
 import selectors.newUserForm;
 import selectors.signUpPage;
 
-public class baseTest implements basePage, signUpPage, newUserForm, accountCreatedPage, loggedInAsUserNamePage {
+public class baseTest implements basePage, signUpPage, newUserForm, accountCreatedPage, loggedInAsUserNamePage, contactUsPage {
 	
 	public static WebDriver driver;
 	public static Properties prop = new Properties();
@@ -273,5 +274,75 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		Assert.assertEquals(actualEmaiExistingText, "Email Address already exist!");
 		
 	}
+	
+	public static void goToContactUsForm() {
+		
+		driver.findElement(contactUs_sel).click();
+		
+	}
+	
+	public static void verifyGetInTouchVisible() {
+		
+		WebElement getInTouchText_ele = driver.findElement(contactus_getInTouch_sel);
+		String getInTouchText = getInTouchText_ele.getText();
+		Assert.assertEquals(getInTouchText,"GET IN TOUCH");
+		
+	}
+	
+	public static void enterContactUsFormDetailAndSubmit(String name,String email,String subject,String message,String filePath) {
+		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		
+		WebElement name_ele = driver.findElement(contactus_name_sel);
+		WebElement email_ele = driver.findElement(contactus_email_sel);
+		WebElement subject_ele = driver.findElement(contactus_subject_sel);
+		WebElement message_ele = driver.findElement(contactus_message_sel);
+		WebElement chooseFile_ele = driver.findElement(contactus_chooseFile_sel);
+		WebElement submit_ele = driver.findElement(contactus_submit_sel);
+		
+		js.executeScript("arguments[0].scrollIntoView()",name_ele);
+		name_ele.sendKeys(name);
+		
+		js.executeScript("arguments[0].scrollIntoView()",email_ele);
+		email_ele.sendKeys(email);
+		
+		js.executeScript("arguments[0].scrollIntoView()",subject_ele);
+		subject_ele.sendKeys(subject);
+		
+		js.executeScript("arguments[0].scrollIntoView()",message_ele);
+		message_ele.sendKeys(message);
+		
+		js.executeScript("arguments[0].scrollIntoView()",chooseFile_ele);
+		chooseFile_ele.sendKeys(filePath);
+		
+		js.executeScript("arguments[0].scrollIntoView()",submit_ele);
+		submit_ele.click();
+			
+	}
+	
+	public static void acceptingAlert() {
+		
+		driver.switchTo( ).alert( ).accept();
+		
+	}
+	
+	public static void verifySuccessMessage() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		
+		WebElement successMessage_ele = driver.findElement(contactus_successMessage_sel);
+		
+		wait.until(ExpectedConditions.visibilityOf(successMessage_ele));
+		String actualSuccessMessage = successMessage_ele.getText();
+		Assert.assertEquals(actualSuccessMessage,"Success! Your details have been submitted successfully.");
+		
+	}
+	
+	public static void goToHomePageFromContactUs() {
+		
+		driver.findElement(contactus_homeBtn_sel).click();
+	
+	}
+		
 
 }
