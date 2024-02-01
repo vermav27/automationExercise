@@ -24,8 +24,9 @@ import selectors.contactUsPage;
 import selectors.loggedInAsUserNamePage;
 import selectors.newUserForm;
 import selectors.signUpPage;
+import selectors.testCasesPage;
 
-public class baseTest implements basePage, signUpPage, newUserForm, accountCreatedPage, loggedInAsUserNamePage, contactUsPage {
+public class baseTest implements basePage, signUpPage, newUserForm, accountCreatedPage, loggedInAsUserNamePage, contactUsPage, testCasesPage {
 	
 	public static WebDriver driver;
 	public static Properties prop = new Properties();
@@ -342,6 +343,28 @@ public class baseTest implements basePage, signUpPage, newUserForm, accountCreat
 		
 		driver.findElement(contactus_homeBtn_sel).click();
 	
+	}
+	
+	public static void goToTestCases() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		
+		WebElement testCasesTab = driver.findElement(testCases_sel);
+		wait.until(ExpectedConditions.visibilityOf(testCasesTab));
+		testCasesTab.click();
+		
+	}
+	
+	public static void verifyUserOnTestCasePAge() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		
+		WebElement testCasesLabel = driver.findElement(testCaseLabel);
+		wait.until(ExpectedConditions.visibilityOf(testCasesLabel));
+		String testCasesLabel_text = testCasesLabel.getText();
+		
+		Assert.assertEquals(testCasesLabel_text, "TEST CASES");
+		
 	}
 		
 
